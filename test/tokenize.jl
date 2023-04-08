@@ -820,7 +820,7 @@ end
 end
 
 @testset "invalid operator errors" begin
-    @test toks("--")      == ["--"=>K"ErrorInvalidOperator"] broken=true
+    @test toks("-----") == ["-----"=>K"ErrorInvalidOperator"]
     @test toks("1**2") == ["1"=>K"Integer", "**"=>K"Error**", "2"=>K"Integer"]
     @test toks("a<---b") == ["a"=>K"Identifier", "<---"=>K"ErrorInvalidOperator", "b"=>K"Identifier"]
     @test toks("a..+b") == ["a"=>K"Identifier", "..+"=>K"ErrorInvalidOperator", "b"=>K"Identifier"]
