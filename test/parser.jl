@@ -80,11 +80,11 @@ tests = [
         "a ?\nb : c"  => "(? a b c)"
         "a ? b :\nc"  => "(? a b c)"
         "a ? b : c:d" =>   "(? a b (call-i c : d))"
-        # Following are errors but should recover
-        "a? b : c"    => "(? a (error-t) b c)"
-        "a ?b : c"    => "(? a (error-t) b c)"
-        "a ? b: c"    => "(? a b (error-t) c)"
-        "a ? b :c"    => "(? a b (error-t) c)"
+        # Following are not errors
+        "a? b : c"    => "(? a b c)"
+        "a ?b : c"    => "(? a b c)"
+        "a ? b: c"    => "(? a b c)"
+        "a ? b :c"    => "(? a b c)"
         "a ? b c"     => "(? a b (error-t) c)"
         "A[x ? y : end]" => "(ref A (? x y end))"
     ],

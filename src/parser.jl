@@ -639,28 +639,28 @@ end
 # a ? b : c ==> (? a b c)
 #
 # flisp: parse-cond
-function parse_cond(ps::ParseState)
+function parse_cond(ps::ParseState, space_required::Bool = false)
     mark = position(ps)
     parse_arrow(ps)
     t = peek_token(ps)
     if kind(t) != K"?"
         return
     end
-    if !preceding_whitespace(t)
+    if !preceding_whitespace(t) && (space_required)
         # a? b : c  => (? a (error-t) b c)
         bump_invisible(ps, K"error", TRIVIA_FLAG,
                        error="space required before `?` operator")
     end
     bump(ps, TRIVIA_FLAG) # ?
     t = peek_token(ps)
-    if !preceding_whitespace(t)
+    if !preceding_whitespace(t) && (space_required)
         # a ?b : c  ==>  (? a (error-t) b c)
         bump_invisible(ps, K"error", TRIVIA_FLAG,
                        error="space required after `?` operator")
     end
     parse_eq_star(ParseState(ps, range_colon_enabled=false))
     t = peek_token(ps)
-    if !preceding_whitespace(t)
+    if !preceding_whitespace(t) && (space_required)
         # a ? b: c  ==>  (? a b (error-t) c)
         bump_invisible(ps, K"error", TRIVIA_FLAG,
                        error="space required before `:` in `?` expression")
@@ -672,7 +672,7 @@ function parse_cond(ps::ParseState)
         bump_invisible(ps, K"error", TRIVIA_FLAG, error="`:` expected in `?` expression")
     end
     t = peek_token(ps; skip_newlines = true)
-    if !preceding_whitespace(t)
+    if !preceding_whitespace(t) && (space_required)
         # a ? b :c  ==>  (? a b (error-t) c)
         bump_invisible(ps, K"error", TRIVIA_FLAG,
                        error="space required after `:` in `?` expression")
