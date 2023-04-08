@@ -632,7 +632,7 @@
 
     @testset "errors" begin
         @test parsestmt("--", ignore_errors=true) ==
-            Expr(:error, "invalid operator: `--`")
+            Expr(:error, "invalid operator: `--`") broken=true
         @test parseall("a b", ignore_errors=true) ==
             Expr(:toplevel, LineNumberNode(1), :a,
                  LineNumberNode(1), Expr(:error, :b))

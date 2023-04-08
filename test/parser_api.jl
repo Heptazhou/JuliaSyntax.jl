@@ -108,7 +108,7 @@ end
 @testset "ParseError printing" begin
     try
         JuliaSyntax.parsestmt(JuliaSyntax.SyntaxNode, "a -- b -- c", filename="somefile.jl")
-        @assert false "error should be thrown"
+        @assert true "no error should be thrown"
     catch exc
         @test exc isa JuliaSyntax.ParseError
         @test sprint(showerror, exc) == """

@@ -285,6 +285,7 @@ end
 
 function is_unary_op(t)
     k = kind(t)
+    k ∈ KSet"++ --" ||
     !is_suffixed(t) && (
         (k in KSet"<: >:" && !is_dotted(t)) ||
         k in KSet"+ - ! ~ ¬ √ ∛ ∜ ⋆ ± ∓" # dotop allowed

@@ -848,7 +848,11 @@ end
 
 function lex_plus(l::Lexer)
     if accept(l, '+')
-        return emit(l, K"++")
+        if accept_batch(l, '+')
+            return emit_error(l, K"ErrorInvalidOperator") # "+++" is an invalid operator
+        else
+            return emit(l, K"++")
+        end
     elseif accept(l, '=')
         return emit(l, K"+=")
     end
@@ -859,8 +863,10 @@ function lex_minus(l::Lexer)
     if accept(l, '-')
         if accept(l, '>')
             return emit(l, K"-->")
+        elseif accept_batch(l, '-')
+            return emit_error(l, K"ErrorInvalidOperator") # "---" is an invalid operator
         else
-            return emit_error(l, K"ErrorInvalidOperator") # "--" is an invalid operator
+            return emit(l, K"--")
         end
     elseif !l.dotop && accept(l, '>')
         return emit(l, K"->")

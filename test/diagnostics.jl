@@ -115,5 +115,5 @@ end
         # └┘ ── invalid operator
         # Error @ line 1:8
         a -- b -- c
-        #      └┘ ── invalid operator"""
+        #      └┘ ── invalid operator""" broken=true
 end

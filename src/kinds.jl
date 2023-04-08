@@ -621,6 +621,7 @@ const _kind_names =
         "+"
         "-" # also used for "−"
         "++"
+        "--"
         "⊕"
         "⊖"
         "⊞"

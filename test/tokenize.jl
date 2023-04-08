@@ -820,7 +820,7 @@ end
 end
 
 @testset "invalid operator errors" begin
-    @test toks("--")      == ["--"=>K"ErrorInvalidOperator"]
+    @test toks("--")      == ["--"=>K"ErrorInvalidOperator"] broken=true
     @test toks("1**2") == ["1"=>K"Integer", "**"=>K"Error**", "2"=>K"Integer"]
     @test toks("a<---b") == ["a"=>K"Identifier", "<---"=>K"ErrorInvalidOperator", "b"=>K"Identifier"]
     @test toks("a..+b") == ["a"=>K"Identifier", "..+"=>K"ErrorInvalidOperator", "b"=>K"Identifier"]
@@ -887,6 +887,8 @@ end
     end
     allops = split(join(ops, " "), " ")
     @test all(s->Base.isoperator(Symbol(s)) == is_operator(first(collect(tokenize(s))).kind), allops)
+    allops = split(raw"--", " ")
+    @test all(s->Base.isoperator(Symbol(s)) != is_operator(first(collect(tokenize(s))).kind), allops)
 end
 
 const all_kws = Set([

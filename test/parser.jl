@@ -144,7 +144,12 @@ tests = [
         "x..y..."  => "(... (call-i x .. y))"
     ],
     JuliaSyntax.parse_invalid_ops => [
-        "a--b"  =>  "(call-i a (ErrorInvalidOperator) b)"
+        "--i"   =>  "(call-pre -- i)"
+        "++i"   =>  "(call-pre ++ i)"
+        "a --b" =>  "(call-i a -- b)"
+        "a ++b" =>  "(call-i a ++ b)"
+        "a---b" =>  "(call-i a (ErrorInvalidOperator) b)"
+        "a+++b" =>  "(call-i a (ErrorInvalidOperator) b)"
     ],
     JuliaSyntax.parse_expr => [
         "a - b - c"  => "(call-i (call-i a - b) - c)"
